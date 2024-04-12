@@ -1,4 +1,4 @@
-# trabalho1 trabalho realizado por Bruna Oliveira e Lourenço Pereira
+# trabalho1 - trabalho realizado por Bruna Oliveira e Lourenço Pereira
 
 A new Flutter project.
 
