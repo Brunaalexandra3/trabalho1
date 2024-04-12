@@ -1,16 +1,15 @@
-# trabalho1
+# trabalho1 - trabalho realizado por Bruna Oliveira e Lourenço Pereira
 
 A new Flutter project.
 
-## Getting Started
+# Calculadora de Conversão de Bases Numéricas em Flutter
 
-This project is a starting point for a Flutter application.
+Este é um aplicativo de calculadora de conversão de bases numéricas desenvolvido em Flutter. Ele permite ao utilizador selecionar a base numérica de entrada (decimal, binário, octal, hexadecimal), inserir o número a ser convertido e visualizar o resultado na base de destino também selecionada.
 
-A few resources to get you started if this is your first Flutter project:
+### Funcionalidades:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Seleção da base numérica de entrada e de saída através de menus suspensos.
+- Entrada do número a ser convertido através de um campo de texto.
+- Conversão entre diferentes bases numéricas com precisão e eficiência.
+- Validação das entradas para garantir que sejam válidas para a base selecionada.
+- Interface gráfica simples e intuitiva.
