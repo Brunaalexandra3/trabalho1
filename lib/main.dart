@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const trabalho1());
+  runApp(const Trabalho1());
 }
 
-class trabalho1 extends StatelessWidget {
-  const trabalho1({super.key});
+class Trabalho1 extends StatelessWidget {
+  const Trabalho1({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Base Converter',
+      title: 'Converter',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        primarySwatch: Colors.grey,
       ),
-      home: const Trabalho1Starters(title: 'Base Converter - Página Inicial'),
+      home: const Trabalho1Starters(title: 'Converter'),
     );
   }
 }
 
 class Trabalho1Starters extends StatefulWidget {
   final String title;
-  const Trabalho1Starters({Key? key, required this.title}) : super(key: key);
+  const Trabalho1Starters({Key? key, this.title = 'Converter'}) : super(key: key);
 
   @override
   State<Trabalho1Starters> createState() => _Trabalho1StartersState();
@@ -60,21 +60,21 @@ class _Trabalho1StartersState extends State<Trabalho1Starters> {
             break;
           case 'Binary':
             _outputValue =
-                parsedValue?.toRadixString(2) ?? ''; // Usando ?. e ??
+                parsedValue?.toRadixString(2) ?? ''; 
             break;
           case 'Octal':
             _outputValue =
-                parsedValue?.toRadixString(8) ?? ''; // Usando ?. e ??
+                parsedValue?.toRadixString(8) ?? ''; 
             break;
           case 'Hexadecimal':
             _outputValue = parsedValue?.toRadixString(16)?.toUpperCase() ??
-                ''; // Usando ?. e ??
+                ''; 
             break;
         }
       });
     } else {
       setState(() {
-        _outputValue = 'Invalid input';
+        _outputValue = 'Entrada inválida';
       });
     }
   }
@@ -86,9 +86,9 @@ class _Trabalho1StartersState extends State<Trabalho1Starters> {
         title: Text(widget.title),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.fromLTRB(300, 100, 300, 20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             DropdownButtonFormField(
               value: _inputBase,
@@ -101,11 +101,11 @@ class _Trabalho1StartersState extends State<Trabalho1Starters> {
                   _inputBase = value.toString();
                 });
               },
-              decoration: const InputDecoration(labelText: 'De'),
+              decoration: const InputDecoration(labelText: 'Converter de: '),
             ),
             const SizedBox(height: 20.0),
             TextField(
-              decoration: const InputDecoration(labelText: 'Insira o número'),
+              decoration: const InputDecoration(labelText: 'Insira o número que pretende converter'),
               onChanged: (value) {
                 _inputValue = value;
               },
@@ -122,12 +122,18 @@ class _Trabalho1StartersState extends State<Trabalho1Starters> {
                   _outputBase = value.toString();
                 });
               },
-              decoration: const InputDecoration(labelText: 'Para'),
+              decoration: const InputDecoration(labelText: 'Converter para: '),
             ),
             const SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: _convert,
-              child: const Text('Converter'),
+            SizedBox(
+              width: double.infinity, // Definindo a largura para preencher toda a largura da tela
+              child: ElevatedButton(
+                onPressed: _convert,
+                child: const Text('Converter'),
+                style: ElevatedButton.styleFrom(
+                primary: Colors.grey,
+              ),
+              ),
             ),
             const SizedBox(height: 20.0),
             Text('Resultado: $_outputValue',
@@ -138,3 +144,4 @@ class _Trabalho1StartersState extends State<Trabalho1Starters> {
     );
   }
 }
+
