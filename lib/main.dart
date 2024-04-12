@@ -93,11 +93,6 @@ class _trabalho1StartersState extends State<trabalho1Starters> {
   }
 }
 
-
-
-
-
-
 String? _validator(
     var value, String emptyTxt, String validTxt, int min, int max) {
   value != null ? value = value.replaceAll(',', '.') : null;
