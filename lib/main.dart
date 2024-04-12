@@ -5,28 +5,30 @@ void main() {
 }
 
 class trabalho1 extends StatelessWidget {
-  const trabalho1({Key? key}) : (super: key);
+  const trabalho1({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: trabalho1Starters(),
+      home: Trabalho1Starters(),
     );
   }
 }
 
-class trabalho1Starters extends StatefulWidget {
+class Trabalho1Starters extends StatefulWidget {
   final double? ta;
-  const trabalho1Starters({super.key, this.ta});
+  const Trabalho1Starters({Key? key, this.ta}) : super(key: key);
 
   @override
-  State<trabalho1Starters> createState() => _trabalho1StartersState();
+  State<Trabalho1Starters> createState() => _Trabalho1StartersState();
 }
 
-class _trabalho1StartersState extends State<trabalho1Starters> {
+class _Trabalho1StartersState extends State<Trabalho1Starters> {
   var _formKey = GlobalKey<FormState>();
   final TextEditingController controller = TextEditingController();
   double _totalAmount = 0;
+  String _selectedFromBase = 'Decimal';
+  String _selectedToBase = 'Binary';
 
   @override
   void initState() {
@@ -66,20 +68,71 @@ class _trabalho1StartersState extends State<trabalho1Starters> {
                   children: <Widget>[
                     buildTextFormField(
                         controller,
+<<<<<<< HEAD
                         'Insira o número que pertende converter',
                         'Please, enter the number.',
                         '',
                         'Please, enter a value >= 0.',
+=======
+                        'Insira o valor que pretende converter',
+                        'Por favor, insira um valor',
+                        '',
+                        'Por favor, insira um valor >= 0.',
+>>>>>>> 1a272b8ddd4f4750a664cc33c21ac38183d4349a
                         0,
                         250),
                     const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        buildElevatedButton(reset, 'Converter'),
-                        const SizedBox(
-                          width: 10,
+                        const Text(
+                        "Converter de : ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                        DropdownButton<String>(
+                          value: _selectedFromBase,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _selectedFromBase = newValue!;
+                            });
+                          },
+                          items: <String>['Decimal', 'Binary', 'Octal', 'Hexadecimal']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
                         ),
+                        
+                        const SizedBox(width: 25),
+                        const Text(
+                        "Converter para : ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                        DropdownButton<String>(
+                          value: _selectedToBase,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _selectedToBase = newValue!;
+                            });
+                          },
+                          items: <String>['Decimal', 'Binary', 'Octal', 'Hexadecimal']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        buildElevatedButton(reset, 'Converter'),
+                        const SizedBox(width: 10),
                       ],
                     ),
                   ],
@@ -113,7 +166,6 @@ Widget buildTextFormField(TextEditingController controller, String lbl,
     decoration: InputDecoration(labelText: lbl, suffixText: sufix),
     textAlign: TextAlign.center,
     keyboardType: TextInputType.number,
-    //keyboardType: const TextInputType.numberWithOptions(decimal: true),
     validator: (value) {
       return _validator(value, emptyTxt, validTxt, min, max);
     },
