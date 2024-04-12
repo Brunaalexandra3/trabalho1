@@ -9,172 +9,132 @@ class trabalho1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Trabalho1Starters(),
+    return MaterialApp(
+      title: 'Base Converter',
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+      ),
+      home: const Trabalho1Starters(title: 'Base Converter - Página Inicial'),
     );
   }
 }
 
 class Trabalho1Starters extends StatefulWidget {
-  final double? ta;
-  const Trabalho1Starters({Key? key, this.ta}) : super(key: key);
+  final String title;
+  const Trabalho1Starters({Key? key, required this.title}) : super(key: key);
 
   @override
   State<Trabalho1Starters> createState() => _Trabalho1StartersState();
 }
 
 class _Trabalho1StartersState extends State<Trabalho1Starters> {
-  var _formKey = GlobalKey<FormState>();
-  final TextEditingController controller = TextEditingController();
-  double _totalAmount = 0;
-  String _selectedFromBase = 'Decimal';
-  String _selectedToBase = 'Binary';
+  String _inputValue = '';
+  String _outputValue = '';
+  String _inputBase = 'Decimal';
+  String _outputBase = 'Binary';
 
-  @override
-  void initState() {
-    super.initState();
-    if (widget.ta != null) {
-      _totalAmount = widget.ta!;
+  void _convert() {
+    String inputValue = _inputValue.trim();
+    int? parsedValue;
+
+    switch (_inputBase) {
+      case 'Decimal':
+        parsedValue = int.tryParse(inputValue);
+        break;
+      case 'Binary':
+        parsedValue = int.tryParse(inputValue, radix: 2);
+        break;
+      case 'Octal':
+        parsedValue = int.tryParse(inputValue, radix: 8);
+        break;
+      case 'Hexadecimal':
+        parsedValue = int.tryParse(inputValue, radix: 16);
+        break;
     }
-  }
 
-  void reset() {
-    setState(() {
-      controller.text = '';
-      _formKey = GlobalKey<FormState>();
-    });
+    if (parsedValue != null) {
+      setState(() {
+        switch (_outputBase) {
+          case 'Decimal':
+            _outputValue = parsedValue.toString();
+            break;
+          case 'Binary':
+            _outputValue =
+                parsedValue?.toRadixString(2) ?? ''; // Usando ?. e ??
+            break;
+          case 'Octal':
+            _outputValue =
+                parsedValue?.toRadixString(8) ?? ''; // Usando ?. e ??
+            break;
+          case 'Hexadecimal':
+            _outputValue = parsedValue?.toRadixString(16)?.toUpperCase() ??
+                ''; // Usando ?. e ??
+            break;
+        }
+      });
+    } else {
+      setState(() {
+        _outputValue = 'Invalid input';
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Conversor'),
-        centerTitle: true,
+        title: Text(widget.title),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(60, 60, 60, 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(
-                height: 20,
-              ),
-              Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    buildTextFormField(
-                        controller,
-<<<<<<< HEAD
-                        'Insira o número que pertende converter',
-                        'Please, enter the number.',
-                        '',
-                        'Please, enter a value >= 0.',
-=======
-                        'Insira o valor que pretende converter',
-                        'Por favor, insira um valor',
-                        '',
-                        'Por favor, insira um valor >= 0.',
->>>>>>> 1a272b8ddd4f4750a664cc33c21ac38183d4349a
-                        0,
-                        250),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                        "Converter de : ",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                        DropdownButton<String>(
-                          value: _selectedFromBase,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _selectedFromBase = newValue!;
-                            });
-                          },
-                          items: <String>['Decimal', 'Binary', 'Octal', 'Hexadecimal']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                        
-                        const SizedBox(width: 25),
-                        const Text(
-                        "Converter para : ",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                        DropdownButton<String>(
-                          value: _selectedToBase,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _selectedToBase = newValue!;
-                            });
-                          },
-                          items: <String>['Decimal', 'Binary', 'Octal', 'Hexadecimal']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        buildElevatedButton(reset, 'Converter'),
-                        const SizedBox(width: 10),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            DropdownButtonFormField(
+              value: _inputBase,
+              items: ['Decimal', 'Binary', 'Octal', 'Hexadecimal']
+                  .map((base) =>
+                      DropdownMenuItem(value: base, child: Text(base)))
+                  .toList(),
+              onChanged: (value) {
+                setState(() {
+                  _inputBase = value.toString();
+                });
+              },
+              decoration: const InputDecoration(labelText: 'De'),
+            ),
+            const SizedBox(height: 20.0),
+            TextField(
+              decoration: const InputDecoration(labelText: 'Insira o número'),
+              onChanged: (value) {
+                _inputValue = value;
+              },
+            ),
+            const SizedBox(height: 20.0),
+            DropdownButtonFormField(
+              value: _outputBase,
+              items: ['Decimal', 'Binary', 'Octal', 'Hexadecimal']
+                  .map((base) =>
+                      DropdownMenuItem(value: base, child: Text(base)))
+                  .toList(),
+              onChanged: (value) {
+                setState(() {
+                  _outputBase = value.toString();
+                });
+              },
+              decoration: const InputDecoration(labelText: 'Para'),
+            ),
+            const SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: _convert,
+              child: const Text('Converter'),
+            ),
+            const SizedBox(height: 20.0),
+            Text('Resultado: $_outputValue',
+                style: const TextStyle(fontSize: 18.0)),
+          ],
         ),
       ),
     );
   }
-}
-
-String? _validator(
-    var value, String emptyTxt, String validTxt, int min, int max) {
-  value != null ? value = value.replaceAll(',', '.') : null;
-  if (value == null || value.isEmpty) {
-    return emptyTxt;
-  } else if (double.tryParse(value) == null) {
-    return 'Please enter a valid numerical value.';
-  } else if (double.parse(value) < min || double.parse(value) > max) {
-    return validTxt;
-  }
-  return null;
-}
-
-Widget buildTextFormField(TextEditingController controller, String lbl,
-    String emptyTxt, String sufix, String validTxt, int min, int max) {
-  return TextFormField(
-    controller: controller,
-    decoration: InputDecoration(labelText: lbl, suffixText: sufix),
-    textAlign: TextAlign.center,
-    keyboardType: TextInputType.number,
-    validator: (value) {
-      return _validator(value, emptyTxt, validTxt, min, max);
-    },
-  );
-}
-
-Widget buildElevatedButton(Function() fx, String txt) {
-  return ElevatedButton(
-    onPressed: fx,
-    child: Text(txt),
-  );
 }
