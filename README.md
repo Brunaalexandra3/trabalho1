@@ -2,8 +2,6 @@
 
 A new Flutter project.
 
-## Getting Started
-
 # Calculadora de Conversão de Bases Numéricas em Flutter
 
 Este é um aplicativo de calculadora de conversão de bases numéricas desenvolvido em Flutter. Ele permite ao utilizador selecionar a base numérica de entrada (decimal, binário, octal, hexadecimal), inserir o número a ser convertido e visualizar o resultado na base de destino também selecionada.
