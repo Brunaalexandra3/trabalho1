@@ -5,7 +5,7 @@ void main() {
 }
 
 class trabalho1 extends StatelessWidget {
-  const trabalho1({super.key});
+  const trabalho1({Key? key}) : (super: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _trabalho1StartersState extends State<trabalho1Starters> {
     });
   }
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -67,8 +67,8 @@ class _trabalho1StartersState extends State<trabalho1Starters> {
                     buildTextFormField(
                         controller,
                         'Insira o número que pertende converter',
-                        'Please, enter the price.',
-                        '€',
+                        'Please, enter the number.',
+                        '',
                         'Please, enter a value >= 0.',
                         0,
                         250),
@@ -126,4 +126,3 @@ Widget buildElevatedButton(Function() fx, String txt) {
     child: Text(txt),
   );
 }
-
